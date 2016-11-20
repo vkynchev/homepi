@@ -51,12 +51,15 @@ static domain_name_servers=192.168.1.1
 ```
 
 `interface` -> This defines which network interface you are setting the configuration for.
+
 `static ip_address` -> This is the IP address that you want to set your device to. (Make sure you leave the /24 at the end)
+
 `static routers` -> This is the IP address of your gateway (probably the IP address or your router)
+
 `static domain_name_servers` -> This is the IP address of your DNS (probably the IP address of your router). You can add multiple IP addresses here separated with a single space.
 
-To exit the editor, press ctrl+x
-To save your changes press the letter “Y” then hit enter
-Now all you need to do is reboot, and everything should be set!
+To exit the editor, press `ctrl+x`
 
-Type `reboot` and press enter.
+To save your changes press the letter “Y” then hit enter
+
+Now all you need to do is reboot, and everything should be set!
