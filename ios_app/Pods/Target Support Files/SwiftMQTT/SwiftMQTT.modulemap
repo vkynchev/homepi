@@ -1,6 +1,0 @@
-framework module SwiftMQTT {
-  umbrella header "SwiftMQTT-umbrella.h"
-
-  export *
-  module * { export * }
-}
