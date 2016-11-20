@@ -5,7 +5,7 @@ Home Automation System with Raspberry Pi as MQTT Broker
 
 ### Install the libraries
 
-Install the libraries in the ``/libraries``` directory.
+Install the libraries in the ```/libraries``` directory.
 Copy them to the Arduino IDE libraries folder or use the Arduino library manager.
 
 ### Compile and flash
