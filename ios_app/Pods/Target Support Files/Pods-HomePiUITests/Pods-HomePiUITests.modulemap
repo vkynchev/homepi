@@ -1,0 +1,6 @@
+framework module Pods_HomePiUITests {
+  umbrella header "Pods-HomePiUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}

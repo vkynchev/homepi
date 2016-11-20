@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>Pods-HomePi.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-HomePiTests.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-HomePiUITests.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>SwiftMQTT.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>3508AACBA05C28F4F7FB47D84598D80F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>7D2634149B0F184053EB97702D8FAA6A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>7F3D72B0B0D31610D34B6C5222E5455C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>85BB2200A3740C586B984A674113B24D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
+</dict>
+</plist>
