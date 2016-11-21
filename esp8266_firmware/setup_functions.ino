@@ -2,6 +2,7 @@ void initSetup() {
   EEPROM.begin(32);
   if(EEPROM.read(0) > 10) {
     EEPROM.write(0, 0);
+    EEPROM.commit();
   }
   device_type = EEPROM.read(0);
 
