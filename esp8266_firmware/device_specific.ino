@@ -3,18 +3,36 @@ void deviceSpecificSetup() {
   switch (device_type) {
     case 0:
       //Force all pins as OUTPUTS for now and pull them LOW
-      for (int i = 0; i < pinCount; i++)
+      for (int i = 0; i < sizeof(outputPins); i++)
       {
-        pinMode(pin[i], OUTPUT);
+        pinMode(outputPins[i], OUTPUT);
 
         // Internal led check
-        if(pin[i] == 2) {
-          analogWrite(pin[i], 1023);
-          pinStates[pin[i]-1] = 1023;
+        if(outputPins[i] == 2) {
+          analogWrite(outputPins[i], 1023);
+          pinStates[outputPins[i]-1] = 1023;
         } else {
-          analogWrite(pin[i], 0);
-          pinStates[pin[i]-1] = 0;
+          analogWrite(outputPins[i], 0);
+          pinStates[outputPins[i]-1] = 0;
         }
+      }
+      break;
+    case 1:
+      //Force relay pins as OUTPUTS and pull them LOW
+      for (int i = 0; i < sizeof(relayPins); i++)
+      {
+        pinMode(relayPins[i], OUTPUT);
+        analogWrite(relayPins[i], 0);
+        pinStates[relayPins[i]-1] = 0;
+      }
+      break;
+    case 2:
+      //Force all pins as OUTPUTS for now and pull them LOW
+      for (int i = 0; i < sizeof(ledPins); i++)
+      {
+        pinMode(ledPins[i], OUTPUT);
+        analogWrite(ledPins[i], 0);
+        pinStates[ledPins[i]-1] = 0;
       }
       break;
   }
@@ -53,10 +71,32 @@ void messageReceived(String topic, String payload, char * bytes, unsigned int le
 
         //Update the value in pinStates array
         pinStates[pin-1] = value;
-
-        //sendPinState();
       }
+      break;
+    case 1:
+      if(root["command"] == "set_pin") {
+        int pin = root["pin"];
+        int value = root["value"];
 
+        pinMode(pin, OUTPUT);
+        analogWrite(pin, value);
+
+        //Update the value in pinStates array
+        pinStates[pin-1] = value;
+        sendPinState();
+      }
+      break;
+    case 2:
+      if(root["command"] == "set_pin") {
+        int pin = root["pin"];
+        int value = root["value"];
+
+        pinMode(pin, OUTPUT);
+        analogWrite(pin, value);
+
+        //Update the value in pinStates array
+        pinStates[pin-1] = value;
+      }
       break;
   }
 }
@@ -65,6 +105,12 @@ void loopFunctions() {
 
   switch (device_type) {
     case 0:
+      sendPinState();
+      break;
+    case 1:
+      //
+      break;
+    case 2:
       sendPinState();
       break;
   }
@@ -76,12 +122,35 @@ void sendPinState() {
   DynamicJsonBuffer jsonBuffer;
   JsonObject& root = jsonBuffer.createObject();
   JsonArray& states = root.createNestedArray("pinStates");
-  for (int i = 0; i < pinCount; i++)
-  {
-    JsonArray& data = states.createNestedArray();
-    data.add(pin[i]);
-    data.add(pinStates[pin[i]-1]);
+
+
+  switch (device_type) {
+    case 0:
+      for (int i = 0; i < sizeof(outputPins); i++)
+      {
+        JsonArray& data = states.createNestedArray();
+        data.add(outputPins[i]);
+        data.add(pinStates[outputPins[i]-1]);
+      }
+      break;
+    case 1:
+      for (int i = 0; i < sizeof(relayPins); i++)
+      {
+        JsonArray& data = states.createNestedArray();
+        data.add(relayPins[i]);
+        data.add(pinStates[relayPins[i]-1]);
+      }
+      break;
+    case 2:
+      for (int i = 0; i < sizeof(ledPins); i++)
+      {
+        JsonArray& data = states.createNestedArray();
+        data.add(ledPins[i]);
+        data.add(pinStates[ledPins[i]-1]);
+      }
+      break;
   }
+
 
   char JSONBuffer[root.measureLength() + 1];
   root.printTo(JSONBuffer, sizeof(JSONBuffer));

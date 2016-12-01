@@ -36,8 +36,9 @@ char devices_topic[64] = "devices";
 unsigned long previousMillisFunction = 0;
 const long functionInterval = 1000;
 
-const int pin[] = {0, 1, 2, 3, 4, 5, 12, 13, 14, 15, 16};
-const int pinCount = sizeof(pin) / sizeof(pin[0]);
+const int outputPins[] = {0, 1, 2, 3, 4, 5, 12, 13, 14, 15, 16};
+const int relayPins[] = {5};
+const int ledPins[] = {12, 13, 15};
 int pinStates[16];
 
 void setup() {
