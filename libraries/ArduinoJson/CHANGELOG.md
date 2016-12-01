@@ -1,6 +1,12 @@
 ArduinoJson: change log
 =======================
 
+v5.7.2
+------
+
+* Made PROGMEM available on more platforms (issue #381)
+* Fixed PROGMEM causing an exception on ESP8266 (issue #383)
+
 v5.7.1
 ------
 
