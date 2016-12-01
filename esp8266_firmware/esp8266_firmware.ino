@@ -18,10 +18,10 @@ WiFiClient wlan;
 MQTTClient client;
 
 /*
- * DEVICE MODES
+ * DEVICE TYPES
  * 0 - As conroller board (All outputs)
  * 1 - As power outlet (One/Many relay outputs)
- * 2 - As led controller (One/Two rgb led outputs)
+ * 2 - As led controller (One/Many rgb led outputs)
  */
 int device_type = 0;
 
