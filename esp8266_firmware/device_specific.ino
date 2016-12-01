@@ -1,13 +1,3 @@
-void loopFunctions() {
-
-  switch (device_type) {
-    case 0:
-      sendPinState();
-      break;
-  }
-
-}
-
 void deviceSpecificSetup() {
 
   switch (device_type) {
@@ -25,11 +15,57 @@ void deviceSpecificSetup() {
           analogWrite(pin[i], 0);
           pinStates[pin[i]-1] = 0;
         }
-
-
-        //Init the pinStates array
-
       }
+      break;
+  }
+
+}
+
+void messageReceived(String topic, String payload, char * bytes, unsigned int length) {
+  /*
+  Serial.print("incoming: ");
+  Serial.print(topic);
+  Serial.print(" - ");
+  Serial.print(payload);
+  Serial.println();
+  */
+  DynamicJsonBuffer jsonBuffer;
+  JsonObject& root = jsonBuffer.parseObject(bytes);
+
+  if(topic == device_topic_set) {
+    if(root["command"] == "set_device_type") {
+      int type = root["type"];
+      device_type = type;
+      EEPROM.write(1, device_type); // Set device type
+      EEPROM.commit();
+      ESP.restart();
+    }
+  }
+
+  switch (device_type) {
+    case 0:
+      if(root["command"] == "set_pin") {
+        int pin = root["pin"];
+        int value = root["value"];
+
+        pinMode(pin, OUTPUT);
+        analogWrite(pin, value);
+
+        //Update the value in pinStates array
+        pinStates[pin-1] = value;
+
+        //sendPinState();
+      }
+
+      break;
+  }
+}
+
+void loopFunctions() {
+
+  switch (device_type) {
+    case 0:
+      sendPinState();
       break;
   }
 
@@ -61,35 +97,5 @@ void sendPinState() {
     Serial.println(" bytes");
   } else {
     Serial.println("The pins state was not sent! :(");
-  }
-}
-
-
-void messageReceived(String topic, String payload, char * bytes, unsigned int length) {
-  /*
-  Serial.print("incoming: ");
-  Serial.print(topic);
-  Serial.print(" - ");
-  Serial.print(payload);
-  Serial.println();
-  */
-
-  switch (device_type) {
-    case 0:
-      if(topic == device_topic_set) {
-        DynamicJsonBuffer jsonBuffer;
-        JsonObject& root = jsonBuffer.parseObject(bytes);
-        int pin = root["pin"];
-        int value = root["value"];
-
-        pinMode(pin, OUTPUT);
-        analogWrite(pin, value);
-
-        //Update the value in pinStates array
-        pinStates[pin-1] = value;
-
-        //sendPinState();
-      }
-      break;
   }
 }

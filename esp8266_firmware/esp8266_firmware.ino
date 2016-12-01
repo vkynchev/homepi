@@ -3,9 +3,8 @@
 #include <ArduinoJson.h>
 #include <EEPROM.h>
 
-
 //Firmware version
-#define FIRMWARE_VERSION   "0.3.0"
+#define FIRMWARE_VERSION   "0.3.1"
 
 //WiFi config
 #define WLAN_SSID          "HomePi"
@@ -20,9 +19,9 @@ MQTTClient client;
 
 /*
  * DEVICE MODES
- * 0 - As conroller board (Only outputs)
- *
- *
+ * 0 - As conroller board (All outputs)
+ * 1 - As power outlet (One/Many relay outputs)
+ * 2 - As led controller (One/Two rgb led outputs)
  */
 int device_type = 0;
 
