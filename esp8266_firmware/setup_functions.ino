@@ -45,6 +45,7 @@ void connectWifi() {
   Serial.print(WLAN_SSID);
 
   WiFi.begin(WLAN_SSID, WLAN_PASS);
+  WiFi.mode(WIFI_STA);
 
   //Wait for connection
   while (WiFi.status() != WL_CONNECTED) {
