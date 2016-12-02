@@ -5,7 +5,7 @@
 
 
 //Firmware version
-#define FIRMWARE_VERSION   "0.3.0"
+#define FIRMWARE_VERSION   "0.3.1"
 
 //WiFi config
 #define WLAN_SSID          "HomePi"
@@ -19,10 +19,10 @@ WiFiClient wlan;
 MQTTClient client;
 
 /*
- * DEVICE MODES
- * 0 - As conroller board (Only outputs)
- *
- *
+ * DEVICE TYPES
+ * 0 - As conroller board (All outputs)
+ * 1 - As power outlet (One/Many relay outputs)
+ * 2 - As led controller (One/Many rgb led outputs)
  */
 int device_type = 0;
 
@@ -37,8 +37,9 @@ char devices_topic[64] = "devices";
 unsigned long previousMillisFunction = 0;
 const long functionInterval = 1000;
 
-const int pin[] = {0, 1, 2, 3, 4, 5, 12, 13, 14, 15, 16};
-const int pinCount = sizeof(pin) / sizeof(pin[0]);
+const int outputPins[] = {0, 1, 2, 3, 4, 5, 12, 13, 14, 15, 16};
+const int relayPins[] = {5};
+const int ledPins[] = {12, 13, 15};
 int pinStates[16];
 
 void setup() {
@@ -49,6 +50,8 @@ void setup() {
   initSetup();
   connectWifi();
   connectMQTT();
+  
+  delay(100);
   deviceSpecificSetup();
 }
 

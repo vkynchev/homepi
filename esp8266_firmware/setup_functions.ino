@@ -1,10 +1,13 @@
 void initSetup() {
   EEPROM.begin(32);
-  if(EEPROM.read(0) > 10) {
-    EEPROM.write(0, 0);
+  if(EEPROM.read(0) != 16 || EEPROM.read(1) != 8 || EEPROM.read(2) != 4) {
+    EEPROM.write(0, 16);
+    EEPROM.write(1, 8);
+    EEPROM.write(2, 4);
+    EEPROM.write(3, 0);
     EEPROM.commit();
   }
-  device_type = EEPROM.read(0);
+  device_type = EEPROM.read(3);
 
   //Convert chipID to char
   sprintf(chipID_char, "%d", chipID);
