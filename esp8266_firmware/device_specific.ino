@@ -6,14 +6,15 @@ void deviceSpecificSetup() {
       for (int i = 0; i < sizeof(outputPins)/sizeof(outputPins[0]); i++)
       {
         pinMode(outputPins[i], OUTPUT);
+
         // Internal led check
+        int value = 0;
         if(outputPins[i] == 2) {
-          analogWrite(outputPins[i], 1023);
-          pinStates[outputPins[i]-1] = 1023;
-        } else {
-          analogWrite(outputPins[i], 0);
-          pinStates[outputPins[i]-1] = 0;
+          value = 1023;
         }
+
+        analogWrite(outputPins[i], value);
+        pinStates[outputPins[i]-1] = value;
       }
       break;
     case 1:
@@ -23,6 +24,12 @@ void deviceSpecificSetup() {
         pinMode(relayPins[i], OUTPUT);
         analogWrite(relayPins[i], 0);
         pinStates[relayPins[i]-1] = 0;
+      }
+
+      for (int i = 0; i < sizeof(relayHardwarePins)/sizeof(relayHardwarePins[0]); i++)
+      {
+        pinMode(relayHardwarePins[i], INPUT_PULLUP);
+        attachInterrupt(relayHardwarePins[i], relayHardwarePinPressed, FALLING);
       }
       break;
     case 2:
@@ -45,8 +52,8 @@ void loopFunctions() {
       sendPinState();
       break;
     case 1:
-        //
-        break;
+      sendPinState();
+      break;
     case 2:
       sendPinState();
       break;
@@ -151,8 +158,6 @@ void messageReceived(String topic, String payload, char * bytes, unsigned int le
 
           //Update the value in pinStates array
           pinStates[pin-1] = value;
-
-          sendPinState();
         }
       }
       break;

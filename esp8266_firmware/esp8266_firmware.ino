@@ -5,7 +5,7 @@
 
 
 //Firmware version
-#define FIRMWARE_VERSION   "0.3.1"
+#define FIRMWARE_VERSION   "0.3.2"
 
 //WiFi config
 #define WLAN_SSID          "HomePi"
@@ -39,6 +39,7 @@ const long functionInterval = 1000;
 
 const int outputPins[] = {0, 1, 2, 3, 4, 5, 12, 13, 14, 15, 16};
 const int relayPins[] = {5};
+const int relayHardwarePins[] = {4};
 const int ledPins[] = {12, 13, 15};
 int pinStates[16];
 
@@ -50,7 +51,7 @@ void setup() {
   initSetup();
   connectWifi();
   connectMQTT();
-  
+
   delay(100);
   deviceSpecificSetup();
 }
